@@ -388,7 +388,8 @@ class BoundedAttention(injection_utils.AttentionBase):
             x0, x1 = box[0] * resolution, box[2] * resolution
             y0, y1 = box[1] * resolution, box[3] * resolution
 
-            boxes[i, round(y0) : round(y1), round(x0) : round(x1)] = True
+            #boxes[i, round(y0) : round(y1), round(x0) : round(x1)] = True
+            boxes[i, y0.round().long() : y1.round().long(), x0.round().long() : x1.round().long()] = True
 
         return boxes.flatten(start_dim=1)
 
