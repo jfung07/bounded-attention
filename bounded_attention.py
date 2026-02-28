@@ -385,16 +385,22 @@ class BoundedAttention(injection_utils.AttentionBase):
     def _convert_boxes_to_masks(self, resolution, device=None):  # s n
         #boxes = torch.zeros(len(self.boxes), resolution, resolution, dtype=bool, device=device)
         # Force boxes to tensor
+        # Handle resolution being int OR tuple
+        if isinstance(resolution, int):
+            h = w = resolution
+        else:
+            h, w = resolution
+
+        # Force boxes to tensor
         boxes_tensor = torch.tensor(self.boxes, device=device)
 
-        h, w = resolution
         num_subjects = boxes_tensor.shape[0]
-
         masks = torch.zeros((num_subjects, h, w), dtype=torch.bool, device=device)
 
         for i in range(num_subjects):
             x0, y0, x1, y1 = boxes_tensor[i]
 
+            # Convert normalized coords to pixel coords
             x0 = (x0 * w).round().long()
             x1 = (x1 * w).round().long()
             y0 = (y0 * h).round().long()
