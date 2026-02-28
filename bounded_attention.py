@@ -383,6 +383,7 @@ class BoundedAttention(injection_utils.AttentionBase):
         return masks, background_mask
 
     def _convert_boxes_to_masks(self, resolution, device=None):  # s n
+        boxes = torch.tensor(self.boxes, device = device)
         boxes = torch.zeros(len(self.boxes), resolution, resolution, dtype=bool, device=device)
         for i, box in enumerate(self.boxes):
             x0, x1 = box[0] * resolution, box[2] * resolution
