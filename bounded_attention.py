@@ -383,7 +383,7 @@ class BoundedAttention(injection_utils.AttentionBase):
         return masks, background_mask
 
     def _convert_boxes_to_masks(self, resolution, device=None):  # s n
-        """boxes = torch.zeros(len(self.boxes), resolution, resolution, dtype=bool, device=device)
+        boxes = torch.zeros(len(self.boxes), resolution, resolution, dtype=bool, device=device)
         
         for i, box in enumerate(self.boxes):
             x0, x1 = box[0] * resolution, box[2] * resolution
@@ -393,37 +393,7 @@ class BoundedAttention(injection_utils.AttentionBase):
             boxes[i, y0.round().long() : y1.round().long(), x0.round().long() : x1.round().long()] = True
 
         return boxes.flatten(start_dim=1)
-        """
-        import torch
-        import math
-
-        # resolution is flattened attention size (n = h*w)
-        if isinstance(resolution, int):
-            n = resolution
-            h = w = int(math.sqrt(n))
-        else:
-            h, w = resolution
-
-        boxes_tensor = torch.tensor(self.boxes, device=device)
-        num_subjects = boxes_tensor.shape[0]
-
-        masks = torch.zeros((num_subjects, h, w), dtype=torch.bool, device=device)
-
-        for i in range(num_subjects):
-            x0, y0, x1, y1 = boxes_tensor[i]
-
-            # convert normalized coords to pixel coords
-            x0 = (x0 * w).round().long()
-            x1 = (x1 * w).round().long()
-            y0 = (y0 * h).round().long()
-            y1 = (y1 * h).round().long()
-
-            masks[i, y0:y1, x0:x1] = True
-
-        # flatten to match attention shape (num_subjects, n)
-        masks = masks.view(num_subjects, -1)
-
-        return masks
+        
     def _obtain_self_masks(self, resolution, return_existing=False):
         if (
             (self.self_masks is None) or
