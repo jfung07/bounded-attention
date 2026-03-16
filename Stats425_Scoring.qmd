@@ -1,0 +1,288 @@
+---
+title: "Stats425 Project Stuff"
+author: "Julia Fung"
+format: html
+editor: visual
+---
+
+## SD
+
+### Values
+SD Shark
+```{r}
+
+sd_s0_j = c(3,1,5,5,5)
+sd_s0_l = c(1,1,5,5,5)
+sd_s1_j = c(2,1,5,5,5)
+sd_s1_l = c(1,1,5,5,5)
+sd_s2_j = c(1,1,5,5,5)
+sd_s2_l = c(1,1,5,5,5)
+sd_s3_j = c(1,1,5,1,5)
+sd_s3_l = c(2,2,5,1,5)
+sd_s4_j = c(1,1,5,5,5)
+sd_s4_l = c(1,1,5,5,5)
+sd_s5_j = c(1,1,5,5,5)
+sd_s5_l = c(1,1,5,5,5)
+sd_s6_j = c(2,1,5,3,5)
+sd_s6_l = c(3,2,5,1,5)
+
+```
+
+SD Flower
+```{r}
+
+sd_f0_j = c(1,1,5,4,4)
+sd_f0_l = c(2,1,5,5,5)
+sd_f1_j = c(1,1,5,2,4)
+sd_f1_l = c(2,1,5,1,2)
+sd_f2_j = c(1,1,5,2,4)
+sd_f2_l = c(1,1,5,1,5)
+sd_f3_j = c(4,3,5,5,4)
+sd_f3_l = c(5,5,5,5,2)
+sd_f4_j = c(1,1,5,3,4)
+sd_f4_l = c(2,1,5,3,5)
+sd_f5_j = c(1,1,5,3,3)
+sd_f5_l = c(1,1,5,1,5)
+sd_f6_j = c(1,1,5,3,5)
+sd_f6_l = c(1,1,5,1,5)
+
+```
+
+SD Cartoon
+```{r}
+
+sd_c0_j = c(1,2,2,5,5)
+sd_c0_l = c(3,4,1,4,5)
+sd_c1_j = c(1,1,3,5,5)
+sd_c1_l = c(1,2,1,3,5)
+sd_c2_j = c(1,1,3,5,5)
+sd_c2_l = c(1,1,2,3,5)
+sd_c3_j = c(1,1,3,5,5)
+sd_c3_l = c(2,2,1,1,5)
+sd_c4_j = c(1,1,5,4,5)
+sd_c4_l = c(2,1,2,3,5)
+sd_c5_j = c(1,1,4,5,5)
+sd_c5_l = c(1,1,5,3,5)
+sd_c6_j = c(1,1,5,5,5)
+sd_c6_l = c(3,2,4,1,5)
+
+```
+
+SD Jedi
+```{r}
+
+  sd_j0_j = c(3,5,5,5,NA)
+  sd_j0_l = c(1,5,5,5,NA)
+  sd_j1_j = c(3,5,5,5,NA)
+  sd_j1_l = c(1,5,5,5,NA)
+  sd_j2_j = c(4,3,4,1,NA)
+  sd_j2_l = c(4,1,3,1,NA)
+  sd_j3_j = c(3,3,5,5,NA)
+  sd_j3_l = c(1,5,5,5,NA)
+  sd_j4_j = c(3,5,5,5,NA)
+  sd_j4_l = c(2,5,5,5,NA)
+  sd_j5_j = c(3,5,5,5,NA)
+  sd_j5_l = c(1,5,5,5,NA)
+  sd_j6_j = c(NA,NA,NA,NA,NA)
+  sd_j6_l = c(NA,NA,NA,NA,NA)
+
+```
+
+### SD Calcs
+
+#### rows
+```{r}
+for(i in 0:6) {
+  vec1 <- get(paste0("sd_s", i, "_j"))
+  vec2 <- get(paste0("sd_s", i, "_l"))
+  vec3 <- get(paste0("sd_f", i, "_j"))
+  vec4 <- get(paste0("sd_f", i, "_l"))
+  vec5 <- get(paste0("sd_c", i, "_j"))
+  vec6 <- get(paste0("sd_c", i, "_l"))
+  vec7 <- get(paste0("sd_j", i, "_j"))
+  vec8 <- get(paste0("sd_j", i, "_l"))
+  
+  mat <- rbind(vec1,vec2,vec3,vec4,vec5,vec6,vec7,vec8)
+  vals <- c(vec1,vec2,vec3,vec4,vec5,vec6,vec7,vec8)
+  print(paste0("Prompt", i))
+  print(colMeans(mat, na.rm = TRUE))
+  print(mean(vals, na.rm = TRUE))
+  print(sd(vals, na.rm = TRUE))
+}
+```
+
+####Cols
+```{r}
+all_vectors <- list()
+
+for(i in 0:6) {
+  vec_names <- c(
+    paste0("sd_s", i, "_j"),
+    paste0("sd_s", i, "_l"),
+    paste0("sd_f", i, "_j"),
+    paste0("sd_f", i, "_l"),
+    paste0("sd_c", i, "_j"),
+    paste0("sd_c", i, "_l"),
+    paste0("sd_j", i, "_j"),
+    paste0("sd_j", i, "_l")
+  )
+  for(vn in vec_names) {
+    all_vectors[[length(all_vectors) + 1]] <- get(vn)
+  }
+}
+
+mat_all <- do.call(rbind, all_vectors)
+col_means <- colMeans(mat_all, na.rm = TRUE)
+col_sds <- apply(mat_all, 2, sd, na.rm = TRUE)
+print(col_means)
+print(col_sds)
+```
+
+
+##SDXL
+
+### values
+SDXL Shark
+```{r}
+
+sdxl_s0_j = c(2,5,5,2,5)
+sdxl_s0_l = c(2,5,5,2,3)
+sdxl_s1_j = c(4,5,1,1,1)
+sdxl_s1_l = c(2,5,5,2,3)
+sdxl_s2_j = c(4,5,1,1,1)
+sdxl_s2_l = c(2,5,1,2,1)
+sdxl_s3_j = c(1,5,3,2,4)
+sdxl_s3_l = c(1,3,5,2,4)
+sdxl_s4_j = c(2,5,5,4,5)
+sdxl_s4_l = c(1,5,5,3,5)
+sdxl_s5_j = c(2,4,3,4,5)
+sdxl_s5_l = c(1,5,5,5,5)
+sdxl_s6_j = c(3,5,3,2,4)
+sdxl_s6_l = c(1,5,5,1,4)
+
+```
+
+SDXL Flower
+```{r}
+
+sdxl_f0_j = c(5,5,3,3,2)
+sdxl_f0_l = c(5,5,4,5,1)
+sdxl_f1_j = c(5,5,4,3,1)
+sdxl_f1_l = c(5,5,4,5,1)
+sdxl_f2_j = c(5,5,4,3,5)
+sdxl_f2_l = c(5,5,5,5,3)
+sdxl_f3_j = c(5,5,3,4,4)
+sdxl_f3_l = c(5,5,3,2,4)
+sdxl_f4_j = c(5,5,3,3,4)
+sdxl_f4_l = c(5,5,3,2,3)
+sdxl_f5_j = c(5,5,3,3,2)
+sdxl_f5_l = c(5,5,2,2,2)
+sdxl_f6_j = c(5,5,4,3,2)
+sdxl_f6_l = c(5,5,4,5,4)
+
+```
+
+SDXL Cartoon
+```{r}
+
+sdxl_c0_j = c(5,5,3,2,3)
+sdxl_c0_l = c(4,5,5,3,5)
+sdxl_c1_j = c(5,5,2,4,1)
+sdxl_c1_l = c(5,5,1,5,5)
+sdxl_c2_j = c(5,5,1,1,1)
+sdxl_c2_l = c(5,5,1,1,1)
+sdxl_c3_j = c(5,5,2,4,2)
+sdxl_c3_l = c(4,5,5,3,3)
+sdxl_c4_j = c(5,5,3,3,3)
+sdxl_c4_l = c(5,5,5,5,5)
+sdxl_c5_j = c(5,5,2,2,3)
+sdxl_c5_l = c(5,5,3,2,3)
+sdxl_c6_j = c(5,5,2,4,2)
+sdxl_c6_l = c(5,5,3,5,3)
+
+```
+
+SDXL Jedi
+```{r}
+
+  sdxl_j0_j = c(4,5,5,5,NA)
+  sdxl_j0_l = c(5,5,5,5,NA)
+  sdxl_j1_j = c(4,3,5,3,NA)
+  sdxl_j1_l = c(4,5,5,5,NA)
+  sdxl_j2_j = c(5,5,5,1,NA)
+  sdxl_j2_l = c(4,4,3,3,NA)
+  sdxl_j3_j = c(3,5,5,1,NA)
+  sdxl_j3_l = c(3,5,3,3,NA)
+  sdxl_j4_j = c(5,5,5,5,NA)
+  sdxl_j4_l = c(4,5,5,5,NA)
+  sdxl_j5_j = c(5,5,5,4,NA)
+  sdxl_j5_l = c(5,5,3,5,NA)
+  sdxl_j6_j = c(NA,NA,NA,NA,NA)
+  sdxl_j6_l = c(NA,NA,NA,NA,NA)
+
+```
+
+### SDXL Calcs
+
+#### rows
+```{r}
+for(i in 0:6) {
+  vec1 <- get(paste0("sdxl_s", i, "_j"))
+  vec2 <- get(paste0("sdxl_s", i, "_l"))
+  vec3 <- get(paste0("sdxl_f", i, "_j"))
+  vec4 <- get(paste0("sdxl_f", i, "_l"))
+  vec5 <- get(paste0("sdxl_c", i, "_j"))
+  vec6 <- get(paste0("sdxl_c", i, "_l"))
+  vec7 <- get(paste0("sdxl_j", i, "_j"))
+  vec8 <- get(paste0("sdxl_j", i, "_l"))
+  
+  mat <- rbind(vec1,vec2,vec3,vec4,vec5,vec6,vec7,vec8)
+  vals <- c(vec1,vec2,vec3,vec4,vec5,vec6,vec7,vec8)
+  print(paste0("Prompt", i))
+  print(colMeans(mat, na.rm = TRUE))
+  print(mean(vals, na.rm = TRUE))
+  print(sd(vals, na.rm = TRUE))
+}
+```
+
+####Cols
+```{r}
+all_vectors <- list()
+
+for(i in 0:6) {
+  vec_names <- c(
+    paste0("sdxl_s", i, "_j"),
+    paste0("sdxl_s", i, "_l"),
+    paste0("sdxl_f", i, "_j"),
+    paste0("sdxl_f", i, "_l"),
+    paste0("sdxl_c", i, "_j"),
+    paste0("sdxl_c", i, "_l"),
+    paste0("sdxl_j", i, "_j"),
+    paste0("sdxl_j", i, "_l")
+  )
+  for(vn in vec_names) {
+    all_vectors[[length(all_vectors) + 1]] <- get(vn)
+  }
+}
+mat_all <- do.call(rbind, all_vectors)
+col_means <- colMeans(mat_all, na.rm = TRUE)
+col_sds <- apply(mat_all, 2, sd, na.rm = TRUE)
+print(col_means)
+print(col_sds)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
